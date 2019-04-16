@@ -6,7 +6,7 @@ namespace RsaCryptography
 {
     class Cryptography
     {
-        private byte[] Codes { get; set; }
+        private byte[] Codes { get; set; } //Array que armazena a mensagem em ASCII
 
 
         public Cryptography()
@@ -14,6 +14,7 @@ namespace RsaCryptography
 
         }
 
+        //Transforma o texto digitado em códido ASCII
         public void Encoder()
         {
             Console.WriteLine("\nDigite um texto para codificar: ");
@@ -29,6 +30,7 @@ namespace RsaCryptography
 
         }
 
+        //Transforma o array de bytes na mensagem decodificada
         public void Decoder(byte[] array)
         {
             string value = Encoding.ASCII.GetString(array);
@@ -38,6 +40,11 @@ namespace RsaCryptography
 
         }
 
+        public bool IsPrime() {
+            
+        }
+
+        //Retorna o array de bytes com códigos ASCII
         public byte[] GetCodes()
         {
             return Codes;

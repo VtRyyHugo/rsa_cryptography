@@ -13,6 +13,7 @@ namespace RsaCryptography
             c = new Cryptography();
         }
 
+        //Interface do console
         public void SelectOptions()
         {
             Console.WriteLine("\nSelecione uma opção :");
