@@ -11,6 +11,7 @@ namespace RsaCryptography
         private Random r;
         private int P {get; set;}
         private int Q {get; set;}
+        private int N {get; set;}
 
 
         public Cryptography()
@@ -102,6 +103,18 @@ namespace RsaCryptography
         public void SetP(int num)
         {
             P = num;
+        }
+
+        // Retorna Q
+        public int GetQ()
+        {
+            return Q;
+        }
+
+        //Seta Q
+        public void SetQ(int num)
+        {
+            Q = num;
         }
     }
 }
