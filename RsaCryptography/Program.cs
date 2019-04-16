@@ -6,7 +6,14 @@ namespace RsaCryptography
     {
         static void Main(string[] args)
         {
-            Cryptography cryp = new Cryptography();
+            MenuInterface m = new MenuInterface();
+            m.SelectOptions();
+          
+
+           
+
         }
+
+
     }
 }
