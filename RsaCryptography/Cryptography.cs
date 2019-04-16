@@ -4,10 +4,10 @@ using System.Text;
 
 namespace RsaCryptography
 {
-    class Crypyography
+    class Cryptography
     {
-        public void generateBytes() {
-            string str = Console.ReadLine();
+        public void setAscEncoding(string str) {
+            str = Console.ReadLine();
 
             byte[] codes = Encoding.ASCII.GetBytes(str);
         }

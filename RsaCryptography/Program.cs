@@ -6,7 +6,7 @@ namespace RsaCryptography
     {
         static void Main(string[] args)
         {
-           
+            Cryptography cryp = new Cryptography();
         }
     }
 }
