@@ -21,7 +21,7 @@ namespace RsaCryptography
         public void SelectOptions()
         {
             Console.WriteLine("\nSelecione uma opção :");
-            Console.WriteLine("\t(1) GERAR PRIMO");
+            Console.WriteLine("\t(1) GERAR KEYS");
             Console.WriteLine("\t(2) CODIFICAR");
             Console.WriteLine("\t(3) DECODIFICAR");
             Console.WriteLine("\t(4) LIMPAR TELA");
@@ -30,8 +30,9 @@ namespace RsaCryptography
             switch (n)
             {
                 case 1:
-                    Key.SetP(Pn.RandomNum(1, 5000));
-                    Console.WriteLine(Key.GetP());
+                    Key.GenerateKeys();
+                    Console.WriteLine("P: " + Key.GetP());
+                    Console.WriteLine("Q: " + Key.GetQ());
                     SelectOptions();
                     break;
 

@@ -8,10 +8,6 @@ namespace RsaCryptography
         {
             MenuInterface m = new MenuInterface();
             m.SelectOptions();
-          
-
-           
-
         }
 
 
