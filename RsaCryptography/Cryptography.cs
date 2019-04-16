@@ -6,7 +6,8 @@ namespace RsaCryptography
 {
     class Cryptography
     {
-        public byte[] Codes;
+        private byte[] Codes { get; set; }
+
 
         public Cryptography()
         {
@@ -15,15 +16,16 @@ namespace RsaCryptography
 
         public void Encoder()
         {
-            Console.WriteLine("Digite um texto para codificar: ");
+            Console.WriteLine("\nDigite um texto para codificar: ");
             string str = Console.ReadLine();
-            Codes = Encoding.ASCII.GetBytes(str);
+            SetCodes(Encoding.ASCII.GetBytes(str));
 
             Console.WriteLine("\nTexto codificado: ");
-            foreach (byte x in Codes)
+            foreach (byte x in GetCodes())
             {
                 Console.Write("{0}", x);
             }
+            Console.WriteLine();
 
         }
 
@@ -34,6 +36,16 @@ namespace RsaCryptography
             Console.WriteLine("\n\nTexto decodificado: ");
             Console.WriteLine(value);
 
+        }
+
+        public byte[] GetCodes()
+        {
+            return Codes;
+        }
+
+        public void SetCodes(byte[] value)
+        {
+            Codes = value;
         }
     }
 }

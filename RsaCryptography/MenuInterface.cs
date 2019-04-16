@@ -8,27 +8,40 @@ namespace RsaCryptography
     {
         public Cryptography c;
 
-        public MenuInterface() {
+        public MenuInterface()
+        {
             c = new Cryptography();
         }
 
         public void SelectOptions()
+        {
+            Console.WriteLine("\nSelecione uma opção :");
+            Console.WriteLine("\t(1) CODIFICAR");
+            Console.WriteLine("\t(2) DECODIFICAR");
+            Console.WriteLine("\t(3) LIMPAR TELA");
+            int n = int.Parse(Console.ReadLine());
+
+            switch (n)
             {
-                Console.WriteLine("\nSelecione uma opção (1 / 2) :");
-                int n = int.Parse(Console.ReadLine());
-
-                switch (n)
-                {
-                    case 1:
+                case 1:
                     c.Encoder();
-                        break;
-                    case 2:
+                    SelectOptions();
+                    break;
 
-                        break;
-                    default:
-                        Console.WriteLine("\nDigite uma opção válida!");
-                        SelectOptions();
-                        break;
+                case 2:
+                    c.Decoder(c.GetCodes());
+                    SelectOptions();
+                    break;
+
+                case 3:
+                    Console.Clear();
+                    SelectOptions();
+                    break;
+
+                default:
+                    Console.WriteLine("\nDigite uma opção válida!");
+                    SelectOptions();
+                    break;
             }
 
         }
