@@ -17,24 +17,31 @@ namespace RsaCryptography
         public void SelectOptions()
         {
             Console.WriteLine("\nSelecione uma opção :");
-            Console.WriteLine("\t(1) CODIFICAR");
-            Console.WriteLine("\t(2) DECODIFICAR");
-            Console.WriteLine("\t(3) LIMPAR TELA");
+            Console.WriteLine("\t(1) GERAR PRIMO");
+            Console.WriteLine("\t(2) CODIFICAR");
+            Console.WriteLine("\t(3) DECODIFICAR");
+            Console.WriteLine("\t(4) LIMPAR TELA");
             int n = int.Parse(Console.ReadLine());
 
             switch (n)
             {
                 case 1:
-                    c.Encoder();
+                    c.SetP(c.RandomNum(1, 5000));
+                    Console.WriteLine(c.GetP());
                     SelectOptions();
                     break;
 
                 case 2:
-                    c.Decoder(c.GetCodes());
+                    c.Encoder();
                     SelectOptions();
                     break;
 
                 case 3:
+                    c.Decoder(c.GetCodes());
+                    SelectOptions();
+                    break;
+
+                case 4:
                     Console.Clear();
                     SelectOptions();
                     break;
