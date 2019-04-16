@@ -6,11 +6,15 @@ namespace RsaCryptography
 {
     class MenuInterface
     {
-        public Cryptography c;
+        private Cryptography Crypto;
+        private Keys Key;
+        private PrimeNumbers Pn;
 
         public MenuInterface()
         {
-            c = new Cryptography();
+            Crypto = new Cryptography();
+            Key = new Keys();
+            Pn = new PrimeNumbers();
         }
 
         //Interface do console
@@ -26,18 +30,18 @@ namespace RsaCryptography
             switch (n)
             {
                 case 1:
-                    c.SetP(c.RandomNum(1, 5000));
-                    Console.WriteLine(c.GetP());
+                    Key.SetP(Pn.RandomNum(1, 5000));
+                    Console.WriteLine(Key.GetP());
                     SelectOptions();
                     break;
 
                 case 2:
-                    c.Encoder();
+                    Crypto.Encoder();
                     SelectOptions();
                     break;
 
                 case 3:
-                    c.Decoder(c.GetCodes());
+                    Crypto.Decoder(Crypto.GetCodes());
                     SelectOptions();
                     break;
 
