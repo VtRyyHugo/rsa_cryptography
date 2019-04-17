@@ -6,9 +6,13 @@ namespace RsaCryptography
 {
     class Keys
     {
-        private int P { get; set; }
-        private int Q { get; set; }
-        private int N { get; set; }
+        private int P { get; set; } // Número primo P
+        private int Q { get; set; } // Número primo Q
+        private int N { get; set; } // Chave pública N
+        private int E { get; set; } // Chave pública E      //REGRAS: 
+                                                           /*--Deve ser qualquer valor entre 1 e função Tot. de N
+                                                            Os divisores de E não podem pertencer 
+                                                            aos divisores de função Tot. de N --> Não podem ter divisores comuns--*/
         private PrimeNumbers Pn;
 
         public Keys()
@@ -16,15 +20,78 @@ namespace RsaCryptography
             P = 0;
             Q = 0;
             Pn = new PrimeNumbers();
-
         }
 
         //Gera as Keys
-        public void GenerateKeys()
+        public void GeneratePublicKeys()
         {
             P = Pn.RandomNum(1, 1000);
             Q = Pn.RandomNum(1, 1000);
             N = P * Q;
+        }
+
+        //Função totiente de N
+        private int TotientFunction()
+        {
+            int tf = (P - 1) * (Q - 1);
+            return tf;
+        }
+
+        
+        public void CalculateMDC(int n1, int n2)
+        {
+            int divisor = 2;
+            List<int> list = new List<int>();
+            List<int> list2 = new List<int>();
+
+            while (n1 > 1)
+            {
+                if (n1 % divisor == 0)
+                {
+                    n1 = n1 / divisor;
+                    list.Add(divisor);
+                    if ((n1 % divisor != 0) && (n1 > 1))
+                    {
+                        divisor++;
+                    }
+                }
+                else
+                {
+                    divisor++;
+                }
+            }
+
+            divisor = 2;
+
+            while (n2 > 1)
+            {
+                if (n2 % divisor == 0)
+                {
+                    n2 = n2 / divisor;
+                    list2.Add(divisor);
+
+                    if ((n2 % divisor != 0) && (n2 > 1))
+                    {
+                        divisor++;
+                    }
+                }
+                else
+                {
+                    divisor++;
+                }
+            }
+
+            foreach (int x in list)
+            {
+                foreach (int y in list2)
+                {
+                    if (x == y)
+                    {
+                        Console.WriteLine("Tem divisores em comum: {0} ", x);
+                        break;
+                    }
+                }
+            }
         }
 
         // Retorna P
@@ -57,10 +124,11 @@ namespace RsaCryptography
             return N;
         }
 
-        //Seta Q
-        public void SetN(int num)
+
+        // Retorna E
+        public int GetE()
         {
-            N = num;
+            return E;
         }
     }
 }

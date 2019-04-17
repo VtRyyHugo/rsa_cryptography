@@ -25,14 +25,16 @@ namespace RsaCryptography
             Console.WriteLine("\t(2) CODIFICAR");
             Console.WriteLine("\t(3) DECODIFICAR");
             Console.WriteLine("\t(4) LIMPAR TELA");
+            Console.WriteLine("\t(5) TESTAR DIVISORES");
             int n = int.Parse(Console.ReadLine());
 
             switch (n)
             {
                 case 1:
-                    Key.GenerateKeys();
+                    Key.GeneratePublicKeys();
                     Console.WriteLine("P: " + Key.GetP());
                     Console.WriteLine("Q: " + Key.GetQ());
+                    Console.WriteLine("Public Key N: " + Key.GetN());
                     SelectOptions();
                     break;
 
@@ -49,6 +51,12 @@ namespace RsaCryptography
                 case 4:
                     Console.Clear();
                     SelectOptions();
+                    break;
+
+                case 5:
+                    int a = int.Parse(Console.ReadLine());
+                    int b = int.Parse(Console.ReadLine());
+                    Key.CalculateMDC(a,b);
                     break;
 
                 default:
