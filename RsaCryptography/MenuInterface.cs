@@ -36,6 +36,8 @@ namespace RsaCryptography
                     Console.WriteLine("Q: " + Key.GetQ());
                     Console.WriteLine("N: " + Key.GetN());
                     Console.WriteLine("E: " + Key.GetE());
+                    Console.WriteLine("D: " + Key.GetD());
+                    Console.WriteLine("Função Totiente de N: " + Key.TotientFunction());
                     SelectOptions();
                     break;
 

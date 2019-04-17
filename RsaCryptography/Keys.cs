@@ -10,7 +10,8 @@ namespace RsaCryptography
         private int Q { get; set; } // Chave privada Q              /*--Deve ser qualquer valor entre 1 e função Tot. de N.    
         private int N { get; set; } // Chave pública N              Os divisores de E não podem pertencer        
         private int E { get; set; } // Chave pública E              aos divisores de função Tot. de N --> Não podem ter divisores comuns--*/
-        private bool Etest { get; set;}                                                                                                                                    
+        private int D { get; set; } // Chave pública D
+        private bool Etest { get; set; }
         private PrimeNumbers Pn;
 
         public Keys()
@@ -28,6 +29,7 @@ namespace RsaCryptography
             Q = Pn.RandomNum(1, 1000);
             N = P * Q;
             GenerateKeyE();
+            GenerateKeyD();
         }
         
         //Gera a chave pública E
@@ -38,18 +40,19 @@ namespace RsaCryptography
 
             while (!Etest)
             {
-                 CalculateMDC(e, funcT);
+                CalculateMDC(e, funcT);
 
-                if (!Etest) {
+                if (!Etest)
+                {
                     e = RandomE(funcT);
-                }                  
+                }
             }
 
             E = e;
         }
 
         //Função totiente de N
-        private int TotientFunction()
+        public int TotientFunction()
         {
             int tf = (P - 1) * (Q - 1);
             return tf;
@@ -120,6 +123,27 @@ namespace RsaCryptography
             return r.Next(1, ntotient);
         }
 
+        //Gera a chave privada D
+        public void GenerateKeyD()
+        {
+            int d = 1;
+            bool testD = false;
+            int t = TotientFunction();
+
+            while (!testD)
+            {
+                if (((d * E) % t) != 1)
+                {
+                    d++;
+                }
+                else
+                {
+                    testD = true;
+                    D = d;
+                }
+            }
+        }
+
         // Retorna P
         public int GetP()
         {
@@ -132,18 +156,22 @@ namespace RsaCryptography
             return Q;
         }
 
-
         // Retorna N
         public int GetN()
         {
             return N;
         }
 
-
         // Retorna E
         public int GetE()
         {
             return E;
+        }
+
+        // Retorna D
+        public int GetD()
+        {
+            return D;
         }
     }
 }
