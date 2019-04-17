@@ -31,10 +31,11 @@ namespace RsaCryptography
             switch (n)
             {
                 case 1:
-                    Key.GeneratePublicKeys();
+                    Key.GenerateKeys();
                     Console.WriteLine("P: " + Key.GetP());
                     Console.WriteLine("Q: " + Key.GetQ());
-                    Console.WriteLine("Public Key N: " + Key.GetN());
+                    Console.WriteLine("N: " + Key.GetN());
+                    Console.WriteLine("E: " + Key.GetE());
                     SelectOptions();
                     break;
 
@@ -54,9 +55,7 @@ namespace RsaCryptography
                     break;
 
                 case 5:
-                    int a = int.Parse(Console.ReadLine());
-                    int b = int.Parse(Console.ReadLine());
-                    Key.CalculateMDC(a,b);
+                    SelectOptions();
                     break;
 
                 default:

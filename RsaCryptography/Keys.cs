@@ -6,13 +6,11 @@ namespace RsaCryptography
 {
     class Keys
     {
-        private int P { get; set; } // Número primo P
-        private int Q { get; set; } // Número primo Q
-        private int N { get; set; } // Chave pública N
-        private int E { get; set; } // Chave pública E      //REGRAS: 
-                                                           /*--Deve ser qualquer valor entre 1 e função Tot. de N
-                                                            Os divisores de E não podem pertencer 
-                                                            aos divisores de função Tot. de N --> Não podem ter divisores comuns--*/
+        private int P { get; set; } // Chave privada P              //REGRAS PARA E:
+        private int Q { get; set; } // Chave privada Q              /*--Deve ser qualquer valor entre 1 e função Tot. de N.    
+        private int N { get; set; } // Chave pública N              Os divisores de E não podem pertencer        
+        private int E { get; set; } // Chave pública E              aos divisores de função Tot. de N --> Não podem ter divisores comuns--*/
+        private bool Etest { get; set;}                                                                                                                                    
         private PrimeNumbers Pn;
 
         public Keys()
@@ -20,14 +18,34 @@ namespace RsaCryptography
             P = 0;
             Q = 0;
             Pn = new PrimeNumbers();
+            Etest = false;
         }
 
-        //Gera as Keys
-        public void GeneratePublicKeys()
+        //Gera as chaves --> P e Q são privadas N e E são públicas
+        public void GenerateKeys()
         {
             P = Pn.RandomNum(1, 1000);
             Q = Pn.RandomNum(1, 1000);
             N = P * Q;
+            GenerateKeyE();
+        }
+        
+        //Gera a chave pública E
+        private void GenerateKeyE()
+        {
+            int funcT = TotientFunction();
+            int e = RandomE(funcT);
+
+            while (!Etest)
+            {
+                 CalculateMDC(e, funcT);
+
+                if (!Etest) {
+                    e = RandomE(funcT);
+                }                  
+            }
+
+            E = e;
         }
 
         //Função totiente de N
@@ -37,8 +55,8 @@ namespace RsaCryptography
             return tf;
         }
 
-        
-        public void CalculateMDC(int n1, int n2)
+        //Testa se existem divisores em comum
+        private void CalculateMDC(int n1, int n2)
         {
             int divisor = 2;
             List<int> list = new List<int>();
@@ -87,11 +105,19 @@ namespace RsaCryptography
                 {
                     if (x == y)
                     {
-                        Console.WriteLine("Tem divisores em comum: {0} ", x);
-                        break;
+                        Etest = false;
+                        return;
                     }
                 }
             }
+            Etest = true;
+        }
+
+        //Gera uma tentativa para E aleatória
+        private int RandomE(int ntotient)
+        {
+            Random r = new Random();
+            return r.Next(1, ntotient);
         }
 
         // Retorna P
@@ -100,23 +126,12 @@ namespace RsaCryptography
             return P;
         }
 
-        //Seta P
-        public void SetP(int num)
-        {
-            P = num;
-        }
-
         // Retorna Q
         public int GetQ()
         {
             return Q;
         }
 
-        //Seta Q
-        public void SetQ(int num)
-        {
-            Q = num;
-        }
 
         // Retorna N
         public int GetN()
