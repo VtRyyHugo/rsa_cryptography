@@ -8,9 +8,9 @@ namespace RsaCryptography
     {
         private int P { get; set; } // Chave privada P              //REGRAS PARA E:
         private int Q { get; set; } // Chave privada Q              /*--Deve ser qualquer valor entre 1 e função Tot. de N.    
-        private int N { get; set; } // Chave pública N              Os divisores de E não podem pertencer        
-        private int E { get; set; } // Chave pública E              aos divisores de função Tot. de N --> Não podem ter divisores comuns--*/
-        private int D { get; set; } // Chave pública D
+        private int N { get; set; } // Chave pública N                  Os divisores de E não podem pertencer        
+        private int E { get;  set; } // Chave pública E                 aos divisores de função Tot. de N --> Não podem ter divisores comuns--*/
+        private int D { get;  set; } // Chave pública D
         private bool Etest { get; set; }
         private PrimeNumbers Pn;
 
@@ -18,6 +18,9 @@ namespace RsaCryptography
         {
             P = 0;
             Q = 0;
+            N = 0;
+            E = 0;
+            D = 0;
             Pn = new PrimeNumbers();
             Etest = false;
         }
@@ -159,7 +162,7 @@ namespace RsaCryptography
         // Retorna N
         public int GetN()
         {
-            return N;
+                return N;
         }
 
         // Retorna E

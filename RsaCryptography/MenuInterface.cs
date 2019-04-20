@@ -42,12 +42,12 @@ namespace RsaCryptography
                     break;
 
                 case 2:
-                    Crypto.Encoder();
+                    Crypto.Encoder(Key);
                     SelectOptions();
                     break;
 
                 case 3:
-                    Crypto.Decoder(Crypto.GetCodes());
+                    Crypto.Decoder(Crypto.GetCodes(), Key);
                     SelectOptions();
                     break;
 
