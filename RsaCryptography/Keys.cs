@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace RsaCryptography
 {
@@ -11,8 +10,8 @@ namespace RsaCryptography
         private int N { get; set; } // Chave pública N                  Os divisores de E não podem pertencer        
         private int E { get;  set; } // Chave pública E                 aos divisores de função Tot. de N --> Não podem ter divisores comuns--*/
         private int D { get;  set; } // Chave pública D
-        private bool Etest { get; set; }
-        private PrimeNumbers Pn;
+        private bool Etest { get; set; } //Diz se a chave E é válida
+        private PrimeNumbers Pn; //Objeto da classe PrimeNumbers
 
         public Keys()
         {

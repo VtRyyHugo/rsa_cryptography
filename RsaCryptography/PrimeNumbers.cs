@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace RsaCryptography
 {
     class PrimeNumbers
     {
         private int Divisors { get; set; } //Armazena a quantidade de divisores de um número
-        private Random r;
+        private Random r; //Objeto da classe Random
 
         public PrimeNumbers()
         {

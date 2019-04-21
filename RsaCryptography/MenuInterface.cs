@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace RsaCryptography
 {
     class MenuInterface
     {
-        private Cryptography Crypto;
-        private Keys Key;
-        private PrimeNumbers Pn;
+        private Cryptography Crypto; //Objeto da classe Cryptography
+        private Keys Key; //Objeto da classe Keys
+        private PrimeNumbers Pn; //Objeto da classe PrimeNumbers
 
         public MenuInterface()
         {
@@ -25,8 +23,8 @@ namespace RsaCryptography
             Console.WriteLine("\t(2) CODIFICAR");
             Console.WriteLine("\t(3) DECODIFICAR");
             Console.WriteLine("\t(4) LIMPAR TELA");
-            Console.WriteLine("\t(5) TESTAR DIVISORES");
             int n = int.Parse(Console.ReadLine());
+            Console.Clear();
 
             switch (n)
             {
@@ -53,10 +51,6 @@ namespace RsaCryptography
 
                 case 4:
                     Console.Clear();
-                    SelectOptions();
-                    break;
-
-                case 5:
                     SelectOptions();
                     break;
 

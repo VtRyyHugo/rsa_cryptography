@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Numerics;
 
@@ -8,9 +7,10 @@ namespace RsaCryptography
     class Cryptography
     {
         private byte[] Codes { get; set; } //Array que armazena a mensagem em ASCII
-        private int[] Converted { get; set; }
-        private BigInteger[] Encrypted { get; set; }
-        private int[] Decrypted { get; set; }
+        private int[] Converted { get; set; } //Array que armazena os bytes convertidos para inteiros
+        private BigInteger[] Encrypted { get; set; } //Array que armazena a mensagem criptografada em inteiros grandes
+        private int[] Decrypted { get; set; } //Array que armazena a mensagem decriptografada em inteiros
+        private byte[] FinalMsg { get; set; } //Array que armazena a mensagem  decriptografada em bytes
 
         public Cryptography()
         {
@@ -26,6 +26,7 @@ namespace RsaCryptography
             Converted = new int[GetCodes().Length];
             Encrypted = new BigInteger[Converted.Length];
             Decrypted = new int[Encrypted.Length];
+            FinalMsg = new byte[Codes.Length];
 
             Console.WriteLine("\nTexto codificado: ");
             foreach (byte x in GetCodes())
@@ -40,10 +41,11 @@ namespace RsaCryptography
         //Transforma o array de bytes na mensagem decodificada
         public void Decoder(byte[] array, Keys key)
         {
-            /*string value = Encoding.ASCII.GetString(array);
-            Console.WriteLine("\n\nTexto decodificado: ");
-            Console.WriteLine(value);*/
             ModDecrypt(Encrypted, Decrypted, key);
+            string txt = Encoding.UTF8.GetString(FinalMsg);
+            Console.WriteLine("Texto decodificado: ");
+            Console.WriteLine(txt);
+
         }
 
         //Converte o array de bytes para inteiros
@@ -61,18 +63,16 @@ namespace RsaCryptography
             int n = key.GetN();
             int e = key.GetE();
 
-            Console.WriteLine(n);
-            
-
             for (int i = 0; i < converted.Length; i++)
             {
                 encrypted[i] = BigInteger.ModPow(converted[i], e, n);
             }
+            Console.WriteLine();
             Console.WriteLine("\nArray Criptografado: ");
 
             foreach (BigInteger x in encrypted)
             {
-                Console.WriteLine(x);
+                Console.Write(x);
             }
         }
 
@@ -84,16 +84,17 @@ namespace RsaCryptography
 
             for (int i = 0; i < encrypted.Length; i++)
             {
-                decrypted[i] = (int)BigInteger.ModPow(encrypted[i], d, n);   
-            }
+                decrypted[i] = (int)BigInteger.ModPow(encrypted[i], d, n);
+                try{
 
-            Console.WriteLine("\nArray Decriptografado: ");
-            foreach (int x in decrypted)
-            {
-                Console.WriteLine(x);
+                    FinalMsg[i] = Convert.ToByte(decrypted[i]);
+                }catch {
+                    Console.Clear();
+                    Console.WriteLine("Ocorreu um erro, tente gerar outra chave!!");
+                }
+                
             }
         }
-
 
         //Retorna o array de bytes com códigos ASCII
         public byte[] GetCodes()
@@ -101,6 +102,7 @@ namespace RsaCryptography
             return Codes;
         }
 
+        //Seta os valores do array
         public void SetCodes(byte[] value)
         {
             Codes = value;
