@@ -63,59 +63,20 @@ namespace RsaCryptography
         //Testa se existem divisores em comum
         private void CalculateMDC(int n1, int n2)
         {
-            int divisor = 2;
-            List<int> list = new List<int>();
-            List<int> list2 = new List<int>();
-
-            while (n1 > 1)
+            if (n2 == 0)
             {
-                if (n1 % divisor == 0)
+                if (n1 == 1)
                 {
-                    n1 = n1 / divisor;
-                    list.Add(divisor);
-                    if ((n1 % divisor != 0) && (n1 > 1))
-                    {
-                        divisor++;
-                    }
+                    Etest = true;
                 }
                 else
                 {
-                    divisor++;
+                    Etest = false;
                 }
             }
-
-            divisor = 2;
-
-            while (n2 > 1)
-            {
-                if (n2 % divisor == 0)
-                {
-                    n2 = n2 / divisor;
-                    list2.Add(divisor);
-
-                    if ((n2 % divisor != 0) && (n2 > 1))
-                    {
-                        divisor++;
-                    }
-                }
-                else
-                {
-                    divisor++;
-                }
+            else {
+                CalculateMDC(n2, n1 % n2);
             }
-
-            foreach (int x in list)
-            {
-                foreach (int y in list2)
-                {
-                    if (x == y)
-                    {
-                        Etest = false;
-                        return;
-                    }
-                }
-            }
-            Etest = true;
         }
 
         //Gera uma tentativa para E aleatória

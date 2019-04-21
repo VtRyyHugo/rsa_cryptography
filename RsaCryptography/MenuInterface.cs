@@ -23,6 +23,7 @@ namespace RsaCryptography
             Console.WriteLine("\t(2) CODIFICAR");
             Console.WriteLine("\t(3) DECODIFICAR");
             Console.WriteLine("\t(4) LIMPAR TELA");
+            Console.WriteLine("\t(5) MOSTRAR KEYS");
             int n = int.Parse(Console.ReadLine());
             Console.Clear();
 
@@ -51,6 +52,16 @@ namespace RsaCryptography
 
                 case 4:
                     Console.Clear();
+                    SelectOptions();
+                    break;
+
+                case 5:
+                    Console.WriteLine("P: " + Key.GetP());
+                    Console.WriteLine("Q: " + Key.GetQ());
+                    Console.WriteLine("N: " + Key.GetN());
+                    Console.WriteLine("E: " + Key.GetE());
+                    Console.WriteLine("D: " + Key.GetD());
+                    Console.WriteLine("Função Totiente de N: " + Key.TotientFunction());
                     SelectOptions();
                     break;
 
