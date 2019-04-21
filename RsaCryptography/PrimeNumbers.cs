@@ -16,14 +16,22 @@ namespace RsaCryptography
         public bool IsPrime(int n)
         {
             Divisors = 0;
-
-            for (int i = 1; i <= n; i++)
+            // testa se n mod 6 = 5 para facilitar o inverso multiplicativo
+            if (n % 6 == 5)
             {
-                if (n % i == 0)
+                for (int i = 1; i <= n; i++)
                 {
-                    Divisors++;
+                    if (n % i == 0)
+                    {
+                        Divisors++;
+                    }
                 }
             }
+            else
+            {
+                return false;
+            }
+            
 
             return Divisors == 2; //Retorna true se o número tiver apenas dois divisores
         }

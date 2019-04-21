@@ -8,7 +8,7 @@ namespace RsaCryptography
         private int P { get; set; } // Chave privada P              //REGRAS PARA E:
         private int Q { get; set; } // Chave privada Q              /*--Deve ser qualquer valor entre 1 e função Tot. de N.    
         private int N { get; set; } // Chave pública N                  Os divisores de E não podem pertencer        
-        private int E { get;  set; } // Chave pública E                 aos divisores de função Tot. de N --> Não podem ter divisores comuns--*/
+        private const int E = 3; // Chave pública E                 aos divisores de função Tot. de N --> Não podem ter divisores comuns--*/
         private int D { get;  set; } // Chave pública D
         private bool Etest { get; set; } //Diz se a chave E é válida
         private PrimeNumbers Pn; //Objeto da classe PrimeNumbers
@@ -18,7 +18,6 @@ namespace RsaCryptography
             P = 0;
             Q = 0;
             N = 0;
-            E = 0;
             D = 0;
             Pn = new PrimeNumbers();
             Etest = false;
@@ -27,14 +26,14 @@ namespace RsaCryptography
         //Gera as chaves --> P e Q são privadas N e E são públicas
         public void GenerateKeys()
         {
-            P = Pn.RandomNum(1, 1000);
-            Q = Pn.RandomNum(1, 1000);
+            P = Pn.RandomNum(1, 10000);
+            Q = Pn.RandomNum(1, 10000);
             N = P * Q;
-            GenerateKeyE();
+            //GenerateKeyE();
             GenerateKeyD();
         }
         
-        //Gera a chave pública E
+        /*Gera a chave pública E
         private void GenerateKeyE()
         {
             int funcT = TotientFunction();
@@ -51,7 +50,7 @@ namespace RsaCryptography
             }
 
             E = e;
-        }
+        }*/
 
         //Função totiente de N
         public int TotientFunction()
@@ -79,32 +78,20 @@ namespace RsaCryptography
             }
         }
 
-        //Gera uma tentativa para E aleatória
+        /*Gera uma tentativa para E aleatória
         private int RandomE(int ntotient)
         {
             Random r = new Random();
             return r.Next(1, ntotient);
-        }
+        }*/
 
         //Gera a chave privada D
         public void GenerateKeyD()
         {
-            int d = 1;
-            bool testD = false;
-            int t = TotientFunction();
+            int x = TotientFunction();
+            int k =  (x - 4) / 6;
 
-            while (!testD)
-            {
-                if (((d * E) % t) != 1)
-                {
-                    d++;
-                }
-                else
-                {
-                    testD = true;
-                    D = d;
-                }
-            }
+            D = 4 * k + 3;
         }
 
         // Retorna P
