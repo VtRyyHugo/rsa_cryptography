@@ -45,7 +45,6 @@ namespace RsaCryptography
             string txt = Encoding.UTF8.GetString(FinalMsg);
             Console.WriteLine("Texto decodificado: ");
             Console.WriteLine(txt);
-
         }
 
         //Converte o array de bytes para inteiros
@@ -74,6 +73,8 @@ namespace RsaCryptography
             {
                 Console.Write(x);
             }
+
+            Console.WriteLine();
         }
 
         //Decripta o array de inteiros

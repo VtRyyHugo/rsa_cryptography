@@ -10,8 +10,8 @@ namespace RsaCryptography
         private int N { get; set; } // Chave pública N                  Os divisores de E não podem pertencer        
         private  int E; // Chave pública E                 aos divisores de função Tot. de N --> Não podem ter divisores comuns--*/
         private int D { get;  set; } // Chave pública D
-        private bool Etest { get; set; } //Diz se a chave E é válida
         private PrimeNumbers Pn; //Objeto da classe PrimeNumbers
+        private int gcd; // Verifica se o MDC é 1 para validar a geração de E
 
         public Keys()
         {
@@ -20,7 +20,7 @@ namespace RsaCryptography
             N = 0;
             D = 0;
             Pn = new PrimeNumbers();
-            Etest = false;
+            gcd = 0;
         }
 
         //Gera as chaves --> P e Q são privadas N e E são públicas
@@ -36,17 +36,14 @@ namespace RsaCryptography
         //Gera a chave pública E
         private void GenerateKeyE()
         {
-            int funcT = TotientFunction();
-            int e = RandomE(funcT);
+            int phi = TotientFunction();
+            int e =RandomE(phi);
+            EuclAlgorithm(e, phi);
 
-            while (!Etest)
+            while (gcd != 1)
             {
-                CalculateMDC(e, funcT);
-
-                if (!Etest)
-                {
-                    e = RandomE(funcT);
-                }
+                e = RandomE(phi);
+                EuclAlgorithm(e, phi);
             }
 
             E = e;
@@ -59,25 +56,6 @@ namespace RsaCryptography
             return tf;
         }
 
-        //Testa se existem divisores em comum
-        private void CalculateMDC(int n1, int n2)
-        {
-            if (n2 == 0)
-            {
-                if (n1 == 1)
-                {
-                    Etest = true;
-                }
-                else
-                {
-                    Etest = false;
-                }
-            }
-            else {
-                CalculateMDC(n2, n1 % n2);
-            }
-        }
-
         //Gera uma tentativa para E aleatória
         private int RandomE(int ntotient)
         {
@@ -86,11 +64,10 @@ namespace RsaCryptography
         }
 
         //Gera a chave privada D
-        public void GenerateKeyD()
+        private void GenerateKeyD()
         {
             int phi = TotientFunction();
-            D = EuclAlgorithm(E, phi);
-            
+            D = EuclAlgorithm(E, phi);  
         }
 
         //Algoritmo de Euclides Estendido
@@ -100,7 +77,6 @@ namespace RsaCryptography
             int oldM = 1, oldN = 0, m = 0, n = 1;
             int helpM, helpN;
             int modB = b;
-
             while (r != 0)
             {
                 helpM = m;
@@ -115,6 +91,7 @@ namespace RsaCryptography
                 b = a;
                 a = r;
 
+                gcd = r;
                 r = b % a;
                 q = b / a;
             }
@@ -125,7 +102,6 @@ namespace RsaCryptography
             }
 
             return n;
-            
         }
 
         // Retorna P

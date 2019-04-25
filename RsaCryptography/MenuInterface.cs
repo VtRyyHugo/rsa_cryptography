@@ -24,52 +24,85 @@ namespace RsaCryptography
             Console.WriteLine("\t(3) DECODIFICAR");
             Console.WriteLine("\t(4) LIMPAR TELA");
             Console.WriteLine("\t(5) MOSTRAR KEYS");
-            int n = int.Parse(Console.ReadLine());
-            Console.Clear();
-
-            switch (n)
+            try
             {
-                case 1:
-                    Key.GenerateKeys();
-                    Console.WriteLine("P: " + Key.GetP());
-                    Console.WriteLine("Q: " + Key.GetQ());
-                    Console.WriteLine("N: " + Key.GetN());
-                    Console.WriteLine("E: " + Key.GetE());
-                    Console.WriteLine("D: " + Key.GetD());
-                    Console.WriteLine("Função Totiente de N: " + Key.TotientFunction());
-                    SelectOptions();
-                    break;
+                int n = int.Parse(Console.ReadLine());
+                Console.Clear();
 
-                case 2:
-                    Crypto.Encoder(Key);
-                    SelectOptions();
-                    break;
+                switch (n)
+                {
+                    case 1:
+                        Key.GenerateKeys();
+                        Console.WriteLine("P: " + Key.GetP());
+                        Console.WriteLine("Q: " + Key.GetQ());
+                        Console.WriteLine("N: " + Key.GetN());
+                        Console.WriteLine("E: " + Key.GetE());
+                        Console.WriteLine("D: " + Key.GetD());
+                        Console.WriteLine("Função Totiente de N: " + Key.TotientFunction());
+                        SelectOptions();
+                        break;
 
-                case 3:
-                    Crypto.Decoder(Crypto.GetCodes(), Key);
-                    SelectOptions();
-                    break;
+                    case 2:
+                        try
+                        {
+                            Crypto.Encoder(Key);
+                            SelectOptions();
+                        }
+                        catch
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Gere as keys para codificar uma mensagem.");
+                            SelectOptions();
+                        }
+                        break;
 
-                case 4:
-                    Console.Clear();
-                    SelectOptions();
-                    break;
+                    case 3:
+                        try
+                        {
+                            Crypto.Decoder(Crypto.GetCodes(), Key);
+                            SelectOptions();
+                        }
+                        catch
+                        {
+                            Console.Clear();
+                            Console.WriteLine("1º gere as keys e codifique uma mensagem.");
+                            SelectOptions();
+                        }
+                        break;
 
-                case 5:
-                    Console.WriteLine("P: " + Key.GetP());
-                    Console.WriteLine("Q: " + Key.GetQ());
-                    Console.WriteLine("N: " + Key.GetN());
-                    Console.WriteLine("E: " + Key.GetE());
-                    Console.WriteLine("D: " + Key.GetD());
-                    Console.WriteLine("Função Totiente de N: " + Key.TotientFunction());
-                    SelectOptions();
-                    break;
+                    case 4:
+                        Console.Clear();
+                        SelectOptions();
+                        break;
 
-                default:
-                    Console.WriteLine("\nDigite uma opção válida!");
-                    SelectOptions();
-                    break;
+                    case 5:
+                        Console.WriteLine("P: " + Key.GetP());
+                        Console.WriteLine("Q: " + Key.GetQ());
+                        Console.WriteLine("N: " + Key.GetN());
+                        Console.WriteLine("E: " + Key.GetE());
+                        Console.WriteLine("D: " + Key.GetD());
+                        Console.WriteLine("Função Totiente de N: " + Key.TotientFunction());
+                        SelectOptions();
+                        break;
+
+                    default:
+                        Console.WriteLine("\nDigite uma opção válida!");
+                        SelectOptions();
+                        break;
+                }
+
             }
+            catch
+            {
+                Console.Clear();
+                Console.WriteLine("Digite um número dentre as opções!");
+                SelectOptions();
+            }
+            
+            
+            
+
+            
 
         }
     }
